@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CampusFlow — College Communication & Workflow</title>
+<style>
+:root{--bg:#f5f7fb;--panel:#fff;--text:#172033;--muted:#697386;--line:#e7eaf0;--primary:#3657e8;--primary2:#eef1ff;--danger:#d83a52;--dangerbg:#fff0f2;--warn:#b97800;--warnbg:#fff7df;--success:#138a5b;--successbg:#eaf9f2;--shadow:0 10px 30px rgba(23,32,51,.07)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}
+.app{display:flex;min-height:100vh}.sidebar{width:250px;background:#11182b;color:#dfe5f7;padding:22px 16px;position:fixed;inset:0 auto 0 0}.brand{font-size:20px;font-weight:800;padding:8px 12px 24px;color:white}.brand span{color:#7f95ff}.rolebox{background:#1c2540;border:1px solid #2b3656;border-radius:12px;padding:12px;margin:0 6px 18px}.rolebox small{display:block;color:#91a0bf;margin-bottom:4px}.rolebox strong{color:white}.nav button{display:flex;width:100%;padding:11px 12px;background:transparent;color:#b9c3dc;border-radius:9px;text-align:left;margin:4px 0;gap:10px}.nav button.active,.nav button:hover{background:#222d4c;color:#fff}.sidebar-footer{position:absolute;bottom:18px;left:22px;right:22px;font-size:11px;color:#7e8ba8}
+.main{margin-left:250px;width:calc(100% - 250px);padding:28px 34px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}.top h1{margin:0;font-size:27px}.sub{color:var(--muted);font-size:13px;margin-top:5px}.actions{display:flex;gap:10px}.btn{padding:10px 15px;border-radius:9px;font-weight:700}.primary{background:var(--primary);color:white}.secondary{background:white;color:var(--text);border:1px solid var(--line)}.danger{background:var(--danger);color:white}.ghost{background:transparent;color:var(--primary)}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}.metric{font-size:28px;font-weight:800;margin-top:8px}.label{font-size:12px;color:var(--muted);font-weight:700}.red{color:var(--danger)}.green{color:var(--success)}.yellow{color:var(--warn)}
+.grid{display:grid;grid-template-columns:1.5fr 1fr;gap:18px}.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}.section-title h2{font-size:16px;margin:0}.panel{background:white;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}.panel-body{padding:18px}.request{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:18px}.request:last-child{border-bottom:0}.request h3{margin:0 0 5px;font-size:14px}.meta{font-size:12px;color:var(--muted);line-height:1.7}.tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.tag{font-size:10px;font-weight:800;padding:4px 7px;border-radius:20px;background:#f0f2f6;color:#536078}.tag.urgent{background:var(--dangerbg);color:var(--danger)}.tag.high{background:var(--warnbg);color:var(--warn)}.tag.approved{background:var(--successbg);color:var(--success)}.tag.pending{background:var(--primary2);color:var(--primary)}.req-actions{display:flex;align-items:center;gap:7px}.mini{font-size:11px;padding:7px 9px;border-radius:7px;background:#f5f6fa;color:#39445b}.mini.approve{background:var(--successbg);color:var(--success)}.mini.reject{background:var(--dangerbg);color:var(--danger)}
+.timeline{padding:6px 0}.event{display:flex;gap:12px;padding:11px 0}.dot{width:9px;height:9px;border-radius:50%;background:var(--primary);margin-top:5px;flex:none}.event strong{font-size:12px}.event div{font-size:11px;color:var(--muted)}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);font-size:12px}th{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:11px;font-weight:800;color:#4d5870}.field input,.field select,.field textarea{border:1px solid #dfe3eb;border-radius:9px;padding:10px 11px;outline:none;background:white}.field textarea{min-height:110px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:#8192ee;box-shadow:0 0 0 3px #eef1ff}.radio-row{display:flex;gap:9px}.priority{display:flex;gap:8px}.priority label{border:1px solid var(--line);padding:8px 10px;border-radius:8px;font-size:11px;cursor:pointer}.priority input{display:none}.priority label:has(input:checked){border-color:var(--primary);background:var(--primary2);color:var(--primary);font-weight:800}
+.hidden{display:none!important}.overlay{position:fixed;inset:0;background:rgba(12,18,33,.45);display:flex;align-items:center;justify-content:center;padding:20px;z-index:10}.modal{background:white;border-radius:16px;max-width:720px;width:100%;max-height:90vh;overflow:auto;box-shadow:0 30px 70px rgba(0,0,0,.25)}.modal-head{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}.modal-head h2{font-size:17px;margin:0}.modal-body{padding:20px}.modal-foot{padding:15px 20px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:9px}
+.flow{display:flex;align-items:center;gap:0;margin:10px 0 20px}.step{flex:1;text-align:center;position:relative}.step:not(:last-child):after{content:"";height:2px;background:#dfe4ef;position:absolute;left:50%;right:-50%;top:14px;z-index:0}.circle{position:relative;z-index:1;margin:auto;width:29px;height:29px;border-radius:50%;background:#e9edf5;color:#67728b;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}.step.done .circle{background:var(--success);color:white}.step.current .circle{background:var(--primary);color:white}.step small{display:block;margin-top:6px;color:var(--muted);font-size:10px}
+.toast{position:fixed;right:22px;bottom:22px;background:#172033;color:white;padding:13px 16px;border-radius:10px;box-shadow:var(--shadow);z-index:20;font-size:12px}
+@media(max-width:950px){.sidebar{width:210px}.main{margin-left:210px;width:calc(100% - 210px);padding:20px}.cards{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
+@media(max-width:650px){.sidebar{position:static;width:100%;height:auto}.sidebar-footer{display:none}.app{display:block}.main{margin:0;width:100%}.cards{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.top{align-items:flex-start;gap:10px;flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand">Campus<span>Flow</span></div>
+  <div class="rolebox"><small>DEMO USER</small><strong id="roleName">Student</strong></div>
+  <nav class="nav">
+    <button class="active" data-page="dashboard">▦ Dashboard</button>
+    <button data-page="requests">▤ Requests & Complaints</button>
+    <button data-page="approvals">✓ Approvals</button>
+    <button data-page="notifications">♢ Notifications <span id="navBadge"></span></button>
+    <button data-page="audit">◷ Audit Trail</button>
+  </nav>
+  <div class="sidebar-footer">College Communication & Workflow MVP<br>Demo data stored locally in this page.</div>
+</aside>
+
+<main class="main">
+  <div class="top">
+    <div><h1 id="pageTitle">Dashboard</h1><div class="sub" id="pageSub">A single place for college requests, approvals and communication.</div></div>
+    <div class="actions"><button class="btn secondary" onclick="switchRole()">Switch role</button><button class="btn primary" onclick="openNewRequest()">+ New request</button></div>
+  </div>
+
+  <section id="page-dashboard"></section>
+  <section id="page-requests" class="hidden"></section>
+  <section id="page-approvals" class="hidden"></section>
+  <section id="page-notifications" class="hidden"></section>
+  <section id="page-audit" class="hidden"></section>
+</main>
+</div>
+
+<div id="modalRoot"></div>
+<div id="toastRoot"></div>
+
+<script>
+const roles=["Student","Tutor","HOD","Vice Principal","Principal"];
+let currentRole="Student";
+let requests=[
+ {id:"CMP-2026-00482",title:"Laboratory equipment not functioning",type:"Complaint",student:"Aarav Menon",dept:"Computer Science",priority:"Urgent",status:"Pending",stage:"Tutor",created:"18 Sep 2026, 10:14",description:"Three systems in Lab 3 are not powering on. Practical assessment is scheduled this week.",steps:["Student","Tutor","HOD","Principal"],current:1},
+ {id:"APP-2026-00391",title:"Leave application — family event",type:"Application",student:"Aarav Menon",dept:"Computer Science",priority:"Normal",status:"Approved",stage:"Completed",created:"17 Sep 2026, 09:32",description:"Leave requested for two working days.",steps:["Student","Tutor"],current:2},
+ {id:"DOC-2026-00177",title:"Bonafide certificate request",type:"Document",student:"Aarav Menon",dept:"Computer Science",priority:"Normal",status:"Pending",stage:"HOD",created:"16 Sep 2026, 14:02",description:"Certificate required for scholarship documentation.",steps:["Student","Tutor","HOD"],current:2},
+ {id:"CMP-2026-00476",title:"Water leakage near Block B restroom",type:"Complaint",student:"Meera Thomas",dept:"Mechanical",priority:"High",status:"In Progress",stage:"HOD",created:"18 Sep 2026, 08:45",description:"Leakage is creating a slippery corridor.",steps:["Student","Tutor","HOD"],current:2},
+ {id:"EVT-2026-00088",title:"Technical symposium permission",type:"Event",student:"ECE Student Association",dept:"Electronics",priority:"Important",status:"Pending",stage:"Principal",created:"15 Sep 2026, 12:18",description:"Request for auditorium and event permission.",steps:["Student","Tutor","HOD","Vice Principal","Principal"],current:4}
+];
+let notifications=[
+ {text:"Urgent complaint CMP-2026-00482 requires Tutor review.",time:"12 min ago",unread:true},
+ {text:"Your bonafide certificate request is awaiting HOD action.",time:"2 hrs ago",unread:true},
+ {text:"Leave application APP-2026-00391 approved.",time:"Yesterday",unread:false}
+];
+let audit=[
+ ["18 Sep 2026, 10:14","Aarav Menon","CMP-2026-00482","Request submitted","Student"],
+ ["18 Sep 2026, 10:15","System","CMP-2026-00482","Tutor notified — urgent priority","System"],
+ ["18 Sep 2026, 11:04","Tutor","APP-2026-00391","Approved request","Tutor"],
+ ["17 Sep 2026, 11:05","System","APP-2026-00391","Student notified","System"],
+ ["16 Sep 2026, 14:02","Aarav Menon","DOC-2026-00177","Request submitted","Student"]
+];
+
+const pageMeta={
+ dashboard:["Dashboard","A single place for college requests, approvals and communication."],
+ requests:["Requests & Complaints","Create, track and manage structured college workflows."],
+ approvals:["Approvals","Items waiting for action at your level of the chain of command."],
+ notifications:["Notifications","Workflow alerts, escalations and system updates."],
+ audit:["Audit Trail","Timestamped record of actions and hand-offs."]
+};
+
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function priorityClass(p){return p==="Urgent"?"urgent":p==="High"||p==="Important"?"high":""}
+function toast(msg){const r=document.getElementById("toastRoot");r.innerHTML='<div class="toast">'+esc(msg)+'</div>';setTimeout(()=>r.innerHTML="",2600)}
+function switchRole(){
+ const i=roles.indexOf(currentRole); currentRole=roles[(i+1)%roles.length];
+ document.getElementById("roleName").textContent=currentRole; renderAll();
+ toast("Demo role switched to "+currentRole);
+}
+function navigate(page){
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+ document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
+ document.getElementById("page-"+page).classList.remove("hidden");
+ document.getElementById("pageTitle").textContent=pageMeta[page][0];
+ document.getElementById("pageSub").textContent=pageMeta[page][1];
+ if(page==="dashboard")renderDashboard(); if(page==="requests")renderRequests(); if(page==="approvals")renderApprovals(); if(page==="notifications")renderNotifications(); if(page==="audit")renderAudit();
+}
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>navigate(b.dataset.page));
+
+function canAct(r){
+ if(currentRole==="Student") return r.student==="Aarav Menon";
+ const map={Tutor:"Tutor",HOD:"HOD","Vice Principal":"Vice Principal",Principal:"Principal"};
+ return r.stage===map[currentRole] && r.status!=="Approved";
+}
+function reqCard(r,action=true){
+ return `<div class="request">
+  <div style="min-width:0"><h3>${esc(r.title)}</h3><div class="meta">${esc(r.id)} · ${esc(r.type)} · ${esc(r.student)} · ${esc(r.dept)}<br>${esc(r.created)}</div>
+  <div class="tags"><span class="tag ${priorityClass(r.priority)}">${esc(r.priority)}</span><span class="tag ${r.status==="Approved"?"approved":"pending"}">${esc(r.status)}</span><span class="tag">${esc(r.stage==="Completed"?"Completed":"Awaiting "+r.stage)}</span></div></div>
+  <div class="req-actions">${action?`<button class="mini" onclick="viewRequest('${r.id}')">View</button>`:""}</div>
+ </div>`;
+}
+function renderDashboard(){
+ const urgent=requests.filter(r=>r.priority==="Urgent"&&r.status!=="Approved").length;
+ const pending=requests.filter(r=>r.status!=="Approved").length;
+ const approved=requests.filter(r=>r.status==="Approved").length;
+ const overdue=currentRole==="Principal"?7:currentRole==="HOD"?3:currentRole==="Tutor"?1:0;
+ document.getElementById("page-dashboard").innerHTML=`
+ <div class="cards">
+  <div class="card"><div class="label">PENDING REQUESTS</div><div class="metric">${pending}</div></div>
+  <div class="card"><div class="label">URGENT ISSUES</div><div class="metric red">${urgent}</div></div>
+  <div class="card"><div class="label">APPROVED</div><div class="metric green">${approved}</div></div>
+  <div class="card"><div class="label">OVERDUE / AT RISK</div><div class="metric yellow">${overdue}</div></div>
+ </div>
+ <div class="grid">
+  <div><div class="section-title"><h2>${currentRole==="Student"?"My requests":"Requests requiring attention"}</h2><button class="ghost" onclick="navigate('requests')">View all →</button></div>
+   <div class="panel">${requests.slice(0,4).map(r=>reqCard(r)).join("")}</div>
+  </div>
+  <div><div class="section-title"><h2>Recent activity</h2></div>
+   <div class="panel"><div class="panel-body"><div class="timeline">${audit.slice(0,5).map(a=>`<div class="event"><span class="dot"></span><div><strong>${esc(a[3])}</strong><div>${esc(a[1])} · ${esc(a[2])}<br>${esc(a[0])}</div></div></div>`).join("")}</div></div></div>
+  </div>
+ </div>`;
+}
+function renderRequests(){
+ document.getElementById("page-requests").innerHTML=`
+ <div class="panel"><div class="panel-body" style="display:flex;justify-content:space-between;gap:12px;align-items:center"><div><strong>All workflow items</strong><div class="sub">Every submission receives an ID and a traceable approval path.</div></div><button class="btn primary" onclick="openNewRequest()">+ New request</button></div></div>
+ <div style="height:14px"></div><div class="panel">${requests.map(r=>reqCard(r)).join("")}</div>`;
+}
+function renderApprovals(){
+ const list=requests.filter(canAct);
+ document.getElementById("page-approvals").innerHTML=`<div class="panel"><div class="panel-body"><strong>Waiting at ${esc(currentRole)}</strong><div class="sub">Approve, reject, or send a request back for more information.</div></div>
+ ${list.length?list.map(r=>`<div class="request"><div><h3>${esc(r.title)}</h3><div class="meta">${esc(r.id)} · ${esc(r.student)} · ${esc(r.dept)}</div><div class="tags"><span class="tag ${priorityClass(r.priority)}">${esc(r.priority)}</span><span class="tag pending">Awaiting ${esc(r.stage)}</span></div></div><div class="req-actions"><button class="mini" onclick="viewRequest('${r.id}')">View</button><button class="mini approve" onclick="decide('${r.id}','approve')">Approve</button><button class="mini reject" onclick="decide('${r.id}','reject')">Reject</button></div></div>`).join(""):"<div class='panel-body' style='color:var(--muted)'>No requests are waiting for your action.</div>"}</div>`;
+}
+function renderNotifications(){
+ document.getElementById("page-notifications").innerHTML=`<div class="panel">${notifications.map((n,i)=>`<div class="request" style="${n.unread?'background:#fbfcff':''}"><div><h3>${n.unread?"● ":""}${esc(n.text)}</h3><div class="meta">${esc(n.time)}</div></div>${n.unread?`<button class="mini" onclick="readNotif(${i})">Mark read</button>`:""}</div>`).join("")}</div>`;
+}
+function renderAudit(){
+ document.getElementById("page-audit").innerHTML=`<div class="panel"><table><thead><tr><th>Time</th><th>Actor</th><th>Request</th><th>Action</th><th>Role</th></tr></thead><tbody>${audit.map(a=>`<tr>${a.map(x=>`<td>${esc(x)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
+function renderAll(){renderDashboard();renderRequests();renderApprovals();renderNotifications();renderAudit();document.getElementById("navBadge").textContent=notifications.filter(n=>n.unread).length?"·"+notifications.filter(n=>n.unread).length:"";}
+function openNewRequest(){
+ document.getElementById("modalRoot").innerHTML=`<div class="overlay" onclick="if(event.target===this)closeModal()"><div class="modal">
+ <div class="modal-head"><h2>Submit a new request</h2><button class="mini" onclick="closeModal()">✕</button></div>
+ <div class="modal-body"><div class="form-grid">
+ <div class="field"><label>REQUEST TYPE</label><select id="fType"><option>Complaint</option><option>Application</option><option>Document</option><option>Leave</option><option>Event</option><option>Academic</option></select></div>
+ <div class="field"><label>DEPARTMENT</label><select id="fDept"><option>Computer Science</option><option>Electronics</option><option>Mechanical</option><option>Civil</option><option>Administration</option></select></div>
+ <div class="field full"><label>SUBJECT</label><input id="fTitle" placeholder="Briefly describe the request"></div>
+ <div class="field full"><label>DESCRIPTION</label><textarea id="fDesc" placeholder="Provide the relevant details..."></textarea></div>
+ <div class="field full"><label>PRIORITY</label><div class="priority">
+ <label><input type="radio" name="pri" value="Normal" checked> Normal</label>
+ <label><input type="radio" name="pri" value="Important"> Important</label>
+ <label><input type="radio" name="pri" value="High"> High</label>
+ <label><input type="radio" name="pri" value="Urgent"> Urgent</label></div></div>
+ <div class="field"><label>ATTACHMENT</label><input type="file" id="fFile"></div>
+ <div class="field"><label>ANONYMOUS COMPLAINT</label><select id="fAnon"><option>No</option><option>Yes</option></select></div>
+ </div></div>
+ <div class="modal-foot"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="submitRequest()">Submit & route</button></div>
+ </div></div>`;
+}
+function closeModal(){document.getElementById("modalRoot").innerHTML=""}
+function submitRequest(){
+ const title=document.getElementById("fTitle").value.trim(); if(!title){toast("Please enter a subject.");return}
+ const type=document.getElementById("fType").value, dept=document.getElementById("fDept").value, desc=document.getElementById("fDesc").value.trim()||"No additional description provided.";
+ const priority=document.querySelector('input[name="pri"]:checked').value;
+ const prefix={Complaint:"CMP",Application:"APP",Document:"DOC",Leave:"LEV",Event:"EVT",Academic:"ACD"}[type]||"REQ";
+ const id=prefix+"-2026-"+String(500+requests.length).padStart(5,"0");
+ const route=(type==="Document"||type==="Complaint")?["Student","Tutor","HOD"]:type==="Event"?["Student","Tutor","HOD","Vice Principal","Principal"]:["Student","Tutor"];
+ const r={id,title,type,student:currentRole==="Student"?"Aarav Menon":currentRole,dept,priority,status:"Pending",stage:route[1],created:"19 Sep 2026, just now",description:desc,steps:route,current:1};
+ requests.unshift(r); audit.unshift(["19 Sep 2026, just now",r.student,id,"Request submitted","Student"]); notifications.unshift({text:`${priority==="Urgent"?"Urgent ":""}${id} submitted and routed to ${r.stage}.`,time:"Just now",unread:true});
+ closeModal(); renderAll(); navigate("requests"); toast(id+" submitted successfully.");
+}
+function viewRequest(id){
+ const r=requests.find(x=>x.id===id); if(!r)return;
+ const steps=r.steps.map((s,i)=>`<div class="step ${i<r.current?"done":i===r.current&&r.status!=="Approved"?"current":""}"><div class="circle">${i<r.current?"✓":i+1}</div><small>${esc(s)}</small></div>`).join("");
+ document.getElementById("modalRoot").innerHTML=`<div class="overlay" onclick="if(event.target===this)closeModal()"><div class="modal">
+ <div class="modal-head"><div><h2>${esc(r.title)}</h2><div class="sub">${esc(r.id)} · ${esc(r.type)}</div></div><button class="mini" onclick="closeModal()">✕</button></div>
+ <div class="modal-body"><div class="tags"><span class="tag ${priorityClass(r.priority)}">${esc(r.priority)}</span><span class="tag ${r.status==="Approved"?"approved":"pending"}">${esc(r.status)}</span></div>
+ <div class="flow">${steps}</div><div class="card" style="box-shadow:none;margin-bottom:14px"><div class="label">DESCRIPTION</div><p style="font-size:13px;line-height:1.6">${esc(r.description)}</p><div class="meta">Submitted by ${esc(r.student)} · ${esc(r.created)} · Department: ${esc(r.dept)}</div></div>
+ <div class="section-title"><h2>Workflow history</h2></div><div class="timeline">${audit.filter(a=>a[2]===r.id).map(a=>`<div class="event"><span class="dot"></span><div><strong>${esc(a[3])}</strong><div>${esc(a[1])} · ${esc(a[0])}</div></div></div>`).join("")||"<div class='meta'>No actions recorded yet.</div>"}</div></div>
+ <div class="modal-foot">${canAct(r)?`<button class="btn danger" onclick="decide('${r.id}','reject')">Reject</button><button class="btn primary" onclick="decide('${r.id}','approve')">Approve / Forward</button>`:""}<button class="btn secondary" onclick="closeModal()">Close</button></div>
+ </div></div>`;
+}
+function decide(id,action){
+ const r=requests.find(x=>x.id===id); if(!r)return;
+ if(!canAct(r)){toast("This request is not assigned to your role.");return}
+ if(action==="reject"){r.status="Rejected";r.stage="Completed";audit.unshift(["19 Sep 2026, just now",currentRole,id,"Rejected request",currentRole]);notifications.unshift({text:`${id} was rejected by ${currentRole}.`,time:"Just now",unread:true});}
+ else{
+  if(r.current<r.steps.length-1){r.current++;r.stage=r.steps[r.current];r.status="In Progress";audit.unshift(["19 Sep 2026, just now",currentRole,id,`Approved and forwarded to ${r.stage}`,currentRole]);notifications.unshift({text:`${id} forwarded to ${r.stage}.`,time:"Just now",unread:true});}
+  else{r.status="Approved";r.stage="Completed";audit.unshift(["19 Sep 2026, just now",currentRole,id,"Final approval completed",currentRole]);notifications.unshift({text:`${id} has received final approval.`,time:"Just now",unread:true});}
+ }
+ closeModal();renderAll();toast(action==="approve"?(r.status==="Approved"?"Request approved.":"Request forwarded to "+r.stage+"."):"Request rejected.");
+}
+function readNotif(i){notifications[i].unread=false;renderAll();navigate("notifications")}
+renderAll();
+</script>
+</body>
+</html>
